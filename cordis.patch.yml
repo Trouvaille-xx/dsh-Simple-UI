@@ -1,0 +1,6 @@
+# dsh-simple-ui bundle patch.
+# The DSH web profile applies this row when the package is listed in
+# dsh.profile.bundles.
+- insert:
+    - id: dsh-simple-ui
+      name: dsh-simple-ui
