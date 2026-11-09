@@ -18,27 +18,36 @@
 
 ## 安装
 
-本插件是 DSH profile 的本地 bundle。推荐用 DSH 自带的插件安装能力，不要手改 profile 的 `package.json` / `cordis.patch.yml`。
+本插件是 DSH profile 的 bundle，装好后在 **设置 → 外观皮肤**。下面四种方式任选其一，都走 DSH 自带的插件安装能力，不要手改 profile 的 `package.json` / `cordis.patch.yml`。
 
-方式一，设置页安装：
-
-1. 打开 **设置 → 插件 → 安装本地插件**，选择本仓库目录（含 `package.json`）。
-2. 安装完成后打开 **设置 → 外观皮肤**。
-
-方式二，对话里让 Agent 安装：
+**方式一：对话里让 Agent 装（最快）**
 
 ```text
-用 plugin_manager 的 install_bundle，target 传 D:\A-AgentWorkspace\09\dsh-simple-ui
+用 plugin_manager 的 install_bundle 安装 dsh-simple-ui，target 用
+git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git#v1.1.0
 ```
 
-方式三，手动 link（仅调试用）：
+**方式二：插件市场**
 
-```powershell
-cd $env:USERPROFILE\.dsh\profiles\<profile>
-pnpm add link:D:\A-AgentWorkspace\09\dsh-simple-ui
+在 **设置 → 插件 → 发现** 添加索引源：
+
+```text
+https://raw.githubusercontent.com/Trouvaille-xx/dsh-Simple-UI/main/market/index.json
 ```
 
-把 `dsh-simple-ui` 加进该 profile `package.json` 的 `dsh.profile.bundles` 后重启 DSH。
+然后搜「Simple UI」一键安装。GitHub 直连不通时可用镜像前缀 `https://gh-proxy.com/` 加到同一地址前。
+
+**方式三：离线包**
+
+下载 [Release](https://github.com/Trouvaille-xx/dsh-Simple-UI/releases) 里的 `dsh-simple-ui-<版本>.zip`，解压后把目录绝对路径交给 `plugin_manager` 的 `install_bundle`（`dsh-simple-ui-<版本>.tgz` 则是 `pnpm add file:<路径>`）。
+
+**方式四：已在本地有源码时**
+
+```text
+用 plugin_manager 的 install_bundle，target 传 <仓库目录绝对路径>
+```
+
+装完重启 DSH 让清单信息（图标、显示名）生效，再打开 **设置 → 外观皮肤**。
 
 说明：`lib/client.js` 这类实现文件的改动会被宿主热载；`package.json`（含展示名、图标、exports）的改动要重启进程才生效，因为宿主只在插件条目启动时读 manifest。
 

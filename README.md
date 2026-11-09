@@ -18,27 +18,36 @@ Repository: <https://github.com/Trouvaille-xx/Dsh-Simple-UI>
 
 ## Install
 
-The plugin is a local bundle for a DSH profile. Use the built-in plugin installer rather than editing the profile's `package.json` or `cordis.patch.yml` by hand.
+The plugin is a bundle for a DSH profile; after installing it lives at **Settings → 外观皮肤 (Appearance)**. Any one of the four options below uses DSH's built-in installer — do not edit the profile's `package.json` or `cordis.patch.yml` by hand.
 
-Option 1, from Settings:
-
-1. Open **Settings → Plugins → install a local plugin** and pick this directory (the one containing `package.json`).
-2. Open **Settings → 外观皮肤 (Appearance)**.
-
-Option 2, from a conversation:
+**Option 1: ask the agent (fastest)**
 
 ```text
-Install with plugin_manager install_bundle, target = D:\A-AgentWorkspace\09\dsh-simple-ui
+Install dsh-simple-ui with plugin_manager install_bundle, target =
+git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git#v1.1.0
 ```
 
-Option 3, manual link (debugging only):
+**Option 2: plugin market**
 
-```powershell
-cd $env:USERPROFILE\.dsh\profiles\<profile>
-pnpm add link:D:\A-AgentWorkspace\09\dsh-simple-ui
+In **Settings → Plugins → Discover**, add this index source:
+
+```text
+https://raw.githubusercontent.com/Trouvaille-xx/dsh-Simple-UI/main/market/index.json
 ```
 
-Add `dsh-simple-ui` to `dsh.profile.bundles` in that profile's `package.json`, then restart DSH.
+Then search for "Simple UI" and install with one click. Where GitHub is blocked, prefix the same URL with `https://gh-proxy.com/`.
+
+**Option 3: offline package**
+
+Download `dsh-simple-ui-<version>.zip` from the [releases](https://github.com/Trouvaille-xx/dsh-Simple-UI/releases), unzip it, and pass the folder's absolute path to `plugin_manager` `install_bundle` (or use the `.tgz` with `pnpm add file:<path>`).
+
+**Option 4: from a local checkout**
+
+```text
+plugin_manager install_bundle, target = <absolute path to this directory>
+```
+
+Restart DSH so the manifest metadata (icon, display name) is picked up, then open **Settings → 外观皮肤**.
 
 Note: implementation files such as `lib/client.js` are hot-loaded by the host; changes to `package.json` (display name, icon, exports) only take effect after a process restart, because the host reads the manifest when the plugin entry starts.
 

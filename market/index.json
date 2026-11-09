@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Simple UI by Trouvaille",
+    "zh": "Trouvaille 的 Simple UI"
+  },
+  "description": {
+    "en": "Appearance skins for the DeepSeek Harness web client: eight industrial-style presets plus colour, font, and background controls. Offline, persistent, and upgrade-safe.",
+    "zh": "DeepSeek Harness Web 客户端外观皮肤：八套工业风预设，加上主色 / 字体 / 背景独立定制。离线可用、设置持久化、宿主升级不破版。"
+  },
+  "metadata": {
+    "categories": {
+      "appearance": {
+        "title": {
+          "en": "Appearance",
+          "zh": "外观皮肤"
+        }
+      }
+    },
+    "labels": {}
+  },
+  "plugins": [
+    {
+      "name": "dsh-simple-ui",
+      "title": {
+        "en": "Simple UI · Appearance",
+        "zh": "Simple UI · 外观皮肤"
+      },
+      "description": {
+        "en": "Eight industrial-style skins for the DSH web UI, with brand / accent / neutral / text colours, Chinese and English fonts, and a background image. Settings persist locally; no web fonts.",
+        "zh": "给 DSH Web UI 的八套工业风皮肤，支持主色 / 辅助色 / 中性色 / 字体色、中英文字体、背景图。设置存在本地，刷新后仍在；不加载任何网络字体。"
+      },
+      "author": "Trouvaille-xx",
+      "repository": {
+        "url": "https://github.com/Trouvaille-xx/dsh-Simple-UI"
+      },
+      "metadata": {
+        "category": "appearance",
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "theme",
+          "skin",
+          "appearance"
+        ],
+        "labels": []
+      },
+      "versions": [
+        {
+          "version": "1.1.0",
+          "publishTimestamp": 1794237646,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Trouvaille-xx/dsh-Simple-UI",
+            "commit": "4e7d6f4781c12032e90dd9f3d8eb99edc2d23e82"
+          },
+          "engines": {}
+        }
+      ]
+    }
+  ]
+}
