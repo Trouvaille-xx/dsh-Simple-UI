@@ -11,13 +11,13 @@
 
 ```text
 用 plugin_manager 的 install_bundle 安装 dsh-simple-ui，target 用
-git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git#v1.2.0
+git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git#v1.3.0
 ```
 
-`#v1.2.0` 是 tag，钉死版本，避免别人装到半成品。也可以钉 commit：
+`#v1.3.0` 是 tag，钉死版本，避免别人装到半成品。也可以钉 commit：
 `git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git#4e7d6f4781c12032e90dd9f3d8eb99edc2d23e82`。
 
-已实测：干净目录里 `pnpm add` 该 spec 可以拉到 1.2.0，`lib/client.js` 身份正确。
+已实测：干净目录里 `pnpm add` 该 spec 可以拉到 1.3.0，`lib/client.js` 身份正确。
 
 ### 2. 插件市场索引（UI 里点一下）
 
@@ -43,11 +43,11 @@ https://gh-proxy.com/https://raw.githubusercontent.com/Trouvaille-xx/dsh-Simple-
 
 ### 3. GitHub Release 离线包（网络最差的兜底）
 
-<https://github.com/Trouvaille-xx/dsh-Simple-UI/releases/tag/v1.2.0> 挂着两个文件：
+<https://github.com/Trouvaille-xx/dsh-Simple-UI/releases/tag/v1.3.0> 挂着两个文件：
 
-- `dsh-simple-ui-1.2.0.zip`：解压得到 `dsh-simple-ui/` 目录 → 让对方把**目录绝对路径**
+- `dsh-simple-ui-1.3.0.zip`：解压得到 `dsh-simple-ui/` 目录 → 让对方把**目录绝对路径**
   交给 `plugin_manager` 的 `install_bundle`。
-- `dsh-simple-ui-1.2.0.tgz`：pnpm 包，对方可 `pnpm add file:<路径>/dsh-simple-ui-1.2.0.tgz`。
+- `dsh-simple-ui-1.3.0.tgz`：pnpm 包，对方可 `pnpm add file:<路径>/dsh-simple-ui-1.3.0.tgz`。
 
 ### 4. npm（可选，要你先登录）
 
@@ -78,7 +78,7 @@ node --check lib/client.js
 node D:\A-AgentWorkspace\09\dsh-simple-ui-tests\client.test.mjs
 
 # 2. 改版本号
-#    package.json 里的 version（例如 1.2.0 -> 1.1.1）
+#    package.json 里的 version（例如 1.3.0 -> 1.1.1）
 
 # 3. 提交并打 tag
 git add -A

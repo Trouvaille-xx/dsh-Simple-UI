@@ -9,7 +9,8 @@ Repository: <https://github.com/Trouvaille-xx/dsh-Simple-UI>
 The settings page is split into four tabs: **Style / Background / Colors / Fonts**.
 
 - **Style**: eight presets (`[CC]`, Apple silver, deep-space terminal, neon purple, Night City 2077, red-and-white, newspaper, sketch) and a corner-radius control (sharp / small / standard / large / extra-large, plus a 0–240% slider; 100% is the host's native scale, applied proportionally across `--dsw-radius-*` and the window content radius).
-- **Background**: still images, animated images (GIF / APNG) and video (MP4 / WebM). Media is stored in IndexedDB, so it is not bound by the localStorage quota; there is a switch, a clear action and a restore-defaults action. Video is muted, looping and autoplaying by default and pauses when the tab is hidden. The background sits under the sidebar and conversation area only — dialogs and the settings panel keep their native opaque surface, so text never sits on top of the picture.
+- **Background**: still images, animated images (GIF / APNG) and video (MP4 / WebM). Media is stored in IndexedDB, so it is not bound by the localStorage quota; there is a switch, a clear action and a restore-defaults action. Video is muted, looping and autoplaying by default and pauses when the tab is hidden.
+- **Readability** (Background tab): a **scrim** slider (0–100%) controls the film laid over the picture, a **panel opacity** slider (0–100%) controls how much of the host surface colour covers the sidebar and conversation area (0% fully transparent, 100% hides the background), and **scrim tone** follows the theme or is forced light/dark. The veil is applied once per layout cell, so nesting cannot bury the image. Dialogs and the settings panel always stay fully opaque.
 - **Colors**: independent brand / accent / neutral / text-colour rows; the first cell of each row is a free colour picker, the rest are palette swatches.
 - **Fonts**: separate Chinese and English font controls. All stacks are local-first with same-style fallbacks, so Chinese text never falls back to tofu.
 - Settings persist in `localStorage` (key `dsh-simple-ui.preset.v1`, including the last tab) and background media in IndexedDB (database `dsh-simple-ui`), and are restored on the next load. Backgrounds saved by older versions in localStorage are migrated automatically.
@@ -79,6 +80,26 @@ node D:\A-AgentWorkspace\09\dsh-simple-ui-tests\bg-engine.check.mjs
 ```
 
 The first suite covers factory identity, section registration, all eight presets, colour-layer leakage, persistence, cleanup and CSS validity. The second covers the background engine end to end: upload, reveal selectors, IndexedDB persistence, toggle, clear, video, corner radius, unload cleanup and restore.
+
+## Choosing a background image (important)
+
+The plugin can only tune the scrim and the panel veil; the wrong picture stays unreadable no matter what. **A good UI background is dark, soft and empty**; a bright, busy, high-detail photo (blossoms, bamboo, snow, bright sky) will swallow the text.
+
+Ask for a 16:9 image of 2560x1440 or larger with low contrast, a dark palette (#0b0d12 – #1a1f2b), heavy depth of field, vignetting, and an empty area towards the centre-left where the sidebar and message text sit. No bright sky, snow, white walls or water highlights; no text or watermark.
+
+Prompt that works:
+
+```text
+A 16:9 realistic wuxia-style wallpaper for a dark UI.
+Low contrast, dark palette (deep blue-black to ink blue, #0b0d12 to #1a1f2b), brightness no higher than mid-grey.
+Heavy depth of field, distant mountains, mist and bamboo only as soft silhouettes; avoid dense high-frequency texture.
+No bright sky, snow, white walls or specular water highlights.
+Subtle vignette; keep an emptier area towards the centre-left for overlaying text.
+Unified tones, ink blue with muted gold accents, no close-up faces.
+No text, watermark or logo; film grain. At least 2560x1440.
+```
+
+Tuning: a dark host theme plus a dark scrim is the most reliable. Typical values are panel 65–80% and scrim 35–55%. To show the picture more, lower the panel **and** raise the scrim to keep contrast — lowering the panel alone brings the readability problem back.
 
 ## Known limitations
 
