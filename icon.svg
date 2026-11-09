@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Simple UI appearance skins">
+  <rect width="64" height="64" rx="14" fill="#16181D"/>
+  <g transform="rotate(-18 32 32)">
+    <rect x="14" y="14" width="16" height="16" rx="3" fill="#C96442"/>
+    <rect x="34" y="14" width="16" height="16" rx="3" fill="#FCEE0A"/>
+    <rect x="14" y="34" width="16" height="16" rx="3" fill="#4D6BFE"/>
+    <rect x="34" y="34" width="16" height="16" rx="3" fill="#14B8A6"/>
+  </g>
+  <rect x="6.75" y="6.75" width="50.5" height="50.5" rx="11.25" fill="none" stroke="#F5F1D8" stroke-opacity="0.35" stroke-width="1.5"/>
+</svg>

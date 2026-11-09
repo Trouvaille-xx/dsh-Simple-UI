@@ -1,12 +1,14 @@
 {
   "name": "dsh-simple-ui",
-  "version": "1.0.0",
-  "description": "A persistent industrial-style appearance skin and real DSH UI enhancements.",
+  "version": "1.1.0",
+  "description": "Industrial-style appearance skins plus colour, font and background customization for DeepSeek Harness.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
     "./package.json": "./package.json"
   },
   "dsh": {
@@ -22,6 +24,25 @@
       "patch": "./cordis.patch.yml"
     }
   },
-  "files": ["lib", "cordis.patch.yml", "README.md", "LICENSE"],
+  "files": [
+    "lib",
+    "locale/*.json",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "theme",
+    "skin",
+    "appearance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trouvaille-xx/dsh-Simple-UI.git"
+  },
   "license": "MIT"
 }

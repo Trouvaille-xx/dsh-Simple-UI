@@ -1,86 +1,80 @@
 # DSH Simple UI
 
-A persistent DeepSeek Harness web-profile plugin that adds an industrial UI skin and small real-runtime UI enhancements.
+An appearance plugin for the DeepSeek Harness (dsh) web client: eight industrial-style skin presets plus independent controls for brand, accent, neutral, and text colours, Chinese/English fonts, and a background image. Everything is stored in the browser, survives reload and restart, and loads no web fonts, so it works fully offline.
 
-Repository: https://github.com/Trouvaille-xx/Dsh-Simple-UI
+Repository: <https://github.com/Trouvaille-xx/Dsh-Simple-UI>
 
 ## Features
 
-- Industrial visual presets:
-  - `[CC]`
-  - Apple 银灰
-  - 深空蓝终端
-  - 霓虹黑紫
-  - 夜之城 2077
-  - 红白页
-  - 报纸版面
-  - 素描线稿
-- Independent main, accent, neutral, and text-color controls.
-- The first color cell in each color row is a free color picker.
-- Ten-cell palette rows with an additional custom color picker.
-- Font controls for Chinese and English fonts.
-- Uploadable background image with an enable/disable switch.
-- Background image is scoped to the sidebar/conversation regions; settings and dialogs remain isolated.
-- Main color is applied to the conversation send button.
-- Real DSH model catalog and live-session model selection through the Harness client API.
-- Read-only OpenAI-compatible Base URL model discovery.
-- Real session-aware status slots without replacing the native DSH conversation renderer.
+- Eight presets: `[CC]`, Apple silver, deep-space terminal, neon purple, Night City 2077, red-and-white, newspaper, sketch.
+- Independent brand / accent / neutral / text-colour rows; the first cell of each row is a free colour picker, the rest are palette swatches.
+- Separate Chinese and English font controls. All stacks are local-first with same-style fallbacks, so Chinese text never falls back to tofu.
+- Uploadable background image with its own on/off switch. It applies only to the sidebar and conversation area; settings and dialogs stay isolated. Images above ~1.5 MB are downscaled automatically.
+- One-click **Clear background** and **Restore defaults**.
+- Settings persist in `localStorage` (`dsh-simple-ui.preset.v1` / `dsh-simple-ui.bg.v1`) and are restored on the next load.
+- No CDN or web-font requests: nothing blocks first paint, and the UI renders correctly offline.
+- Host selectors live in one `HOST_SELECTORS` table (build hash plus semantic fallbacks). When a DSH upgrade changes the hashed class names, skins degrade to the host's default look instead of breaking the layout.
+- Applies colours through the real DSH theme API (`theme.overrideTokens`); it does not rewrite host DOM or replace the conversation renderer.
 
-The plugin does not replace DSH's real conversation, streaming, tool-call, or attachment pipeline.
+## Install
 
-## Install in a DSH web profile
+The plugin is a local bundle for a DSH profile. Use the built-in plugin installer rather than editing the profile's `package.json` or `cordis.patch.yml` by hand.
 
-This package is designed to be installed as a local DSH web-profile bundle.
+Option 1, from Settings:
 
-From the DSH profile directory:
+1. Open **Settings → Plugins → install a local plugin** and pick this directory (the one containing `package.json`).
+2. Open **Settings → 外观皮肤 (Appearance)**.
 
-```powershell
-pnpm add dsh-simple-ui
+Option 2, from a conversation:
+
+```text
+Install with plugin_manager install_bundle, target = D:\A-AgentWorkspace\09\dsh-simple-ui
 ```
 
-Then add `dsh-simple-ui` to the profile's `dsh.profile.bundles` list if the installer does not do so automatically.
+Option 3, manual link (debugging only):
 
-The package's `dsh.bundle.patch` inserts the plugin row into the host composition. Restart DSH after changing the profile bundle list.
+```powershell
+cd $env:USERPROFILE\.dsh\profiles\<profile>
+pnpm add link:D:\A-AgentWorkspace\09\dsh-simple-ui
+```
 
-## Manual local installation
+Add `dsh-simple-ui` to `dsh.profile.bundles` in that profile's `package.json`, then restart DSH.
 
-1. Place this package under:
+Note: implementation files such as `lib/client.js` are hot-loaded by the host; changes to `package.json` (display name, icon, exports) only take effect after a process restart, because the host reads the manifest when the plugin entry starts.
 
-   ```text
-   %USERPROFILE%\.dsh\profiles\web\node_modules\dsh-simple-ui\
-   ```
+## Data and privacy
 
-2. Add `dsh-simple-ui` to `dsh.profile.bundles` in the web profile `package.json`.
-3. Restart DSH.
-4. Open **Settings → 外观皮肤**.
-
-## Runtime requirements
-
-- DeepSeek Harness with the web profile and client slot system.
-- A web client connection exposing the standard DSH API.
-- The model selector uses `llm.models`, `sessions.models`, and `sessions.selectModel`.
-- Base URL discovery uses `llm.discoverModels` with the OpenAI-compatible protocol.
-
-## Security and privacy
-
-- API keys are not stored or rendered by this plugin.
-- Base URL discovery is read-only.
-- The plugin does not serialize live Host objects.
-- User-uploaded backgrounds remain client-side UI state and are not sent to a model.
+- No API key is stored or rendered.
+- Skins and background images stay in the local browser `localStorage`; they are never sent to a model or written into a session.
+- The plugin never serializes live Host objects.
 
 ## Development
 
-The package uses plain JavaScript and the DSH dual-face package format:
+Plain JavaScript, dual-face package, no build step:
 
-- `lib/index.js`: Host half
-- `lib/client.js`: browser Client half
-- `cordis.patch.yml`: web-profile bundle patch
+- `lib/index.js`: Host half (declaration only, empty `apply`)
+- `lib/client.js`: browser Client half, `window.__ModuleLoader__.load({ id: "dsh-simple-ui", factory })`
+- `cordis.patch.yml`: bundle patch that inserts the plugin row into the host composition
+- `locale/zh.json`, `locale/en.json`, `icon.svg`: display name, description, and icon in the plugin list
 
-Validate the browser bundle with:
+Syntax check:
 
 ```powershell
 node --check lib/client.js
 ```
+
+Behavioural regression run (executes the real `lib/client.js` factory inside a Node sandbox with fake theme / slots / React / DOM):
+
+```powershell
+node D:\A-AgentWorkspace\09\dsh-simple-ui-tests\client.test.mjs
+```
+
+Covered: factory identity, settings-section registration, all eight presets applied one by one, colour layers not leaking, settings restored across reload, cleanup on unload, no web-font references, host-selector placeholders resolvable, and valid CSS structure.
+
+## Known limitations
+
+- Background images are bounded by the browser's `localStorage` quota; if the compressed image still cannot be stored, it applies to the current session only and the page says so.
+- After a large host redesign, the semantic fallbacks (`aside` / `header` / `main`) are broader than the original hashes and may cause minor style bleed; decorations without a fallback simply fall back to the host's default look.
 
 ## License
 

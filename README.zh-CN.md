@@ -1,90 +1,80 @@
 # DSH Simple UI
 
-一个面向 DeepSeek Harness 的持久化 Web Profile 插件，为 DSH 增加工业风外观皮肤，以及少量基于真实运行时的 UI 增强。
+面向 DeepSeek Harness（dsh）Web 客户端的外观皮肤插件：8 套工业风预设，加上主色 / 辅助色 / 中性色 / 字体色、中英文字体、背景图的独立定制。所有设置保存在浏览器本地，刷新与重启后仍在；不加载任何网络字体，离线可用。
 
-仓库地址：<https://github.com/Trouvaille-xx/Dsh-Simple-UI>
+仓库：<https://github.com/Trouvaille-xx/dsh-Simple-UI>
 
 ## 功能
 
-- 工业风视觉预设：
-  - `[CC]`
-  - Apple 银灰
-  - 深空蓝终端
-  - 霓虹黑紫
-  - 夜之城 2077
-  - 红白页
-  - 报纸版面
-  - 素描线稿
-- 主色、辅助色、中性色、字体颜色独立配置。
-- 四个颜色配置行的第一个色块都是自由取色面板。
-- 每行保留预设色板和额外的自定义取色入口。
-- 中文字体和英文字体分别配置。
-- 支持上传背景图片，并可以单独关闭图片背景。
-- 图片背景只作用于侧边栏和会话区域，设置页与弹窗保持隔离。
-- 主色会同步到会话发送按钮。
-- 通过 DSH 真实 API 读取模型目录并切换当前会话模型。
-- 支持只读探查 OpenAI-compatible Base URL 的模型列表。
-- 使用 DSH 原生会话、流式输出、工具调用和图片附件流程，不使用演示假回复替代真实运行时。
+- 8 套预设：`[CC]`、Apple 银灰、深空蓝终端、霓虹黑紫、夜之城 2077、红白页、报纸版面、素描线稿。
+- 主色、辅助色、中性色、字体颜色四行独立配置；每行第一个色块是自由取色面板，其余为预设色板。
+- 中文字体与英文字体分别配置；全部走本地字体栈，缺失时用同风格本地近似兜底，中文不会缺字。
+- 上传背景图，可单独开关；只作用于侧栏与会话区，设置页与弹窗保持隔离；图片超过约 1.5MB 时自动等比压缩。
+- 「清除背景图」「恢复默认」一键还原。
+- 设置持久化在 `localStorage`（键 `dsh-simple-ui.preset.v1` / `dsh-simple-ui.bg.v1`），刷新和重启后自动恢复。
+- 不引用任何 CDN 或网络字体：首屏零网络阻塞，断网也能正常显示。
+- 皮肤针对宿主的选择器集中在 `HOST_SELECTORS` 表里（哈希 + 语义兜底）：DSH 升级导致哈希类名变化时，样式降级为宿主默认外观，不会破版。
+- 通过 DSH 真实 API 下发主题 token（`theme.overrideTokens`），不改写宿主 DOM，不替换会话渲染器。
 
-## 安装到 DSH Web Profile
+## 安装
 
-本插件设计为 DSH Web Profile 的本地 bundle。
+本插件是 DSH profile 的本地 bundle。推荐用 DSH 自带的插件安装能力，不要手改 profile 的 `package.json` / `cordis.patch.yml`。
 
-在 DSH Web Profile 目录执行：
+方式一，设置页安装：
 
-```powershell
-pnpm add dsh-simple-ui
+1. 打开 **设置 → 插件 → 安装本地插件**，选择本仓库目录（含 `package.json`）。
+2. 安装完成后打开 **设置 → 外观皮肤**。
+
+方式二，对话里让 Agent 安装：
+
+```text
+用 plugin_manager 的 install_bundle，target 传 D:\A-AgentWorkspace\09\dsh-simple-ui
 ```
 
-如果安装器没有自动添加 bundle，请将 `dsh-simple-ui` 加入 profile 的 `dsh.profile.bundles` 列表。
+方式三，手动 link（仅调试用）：
 
-插件包中的 `dsh.bundle.patch` 会自动把插件行插入宿主组合。修改 profile bundle 后需要重启 DSH。
+```powershell
+cd $env:USERPROFILE\.dsh\profiles\<profile>
+pnpm add link:D:\A-AgentWorkspace\09\dsh-simple-ui
+```
 
-## 手动安装
+把 `dsh-simple-ui` 加进该 profile `package.json` 的 `dsh.profile.bundles` 后重启 DSH。
 
-1. 将插件放到：
+说明：`lib/client.js` 这类实现文件的改动会被宿主热载；`package.json`（含展示名、图标、exports）的改动要重启进程才生效，因为宿主只在插件条目启动时读 manifest。
 
-   ```text
-   %USERPROFILE%\.dsh\profiles\web\node_modules\dsh-simple-ui\
-   ```
+## 数据与隐私
 
-2. 在 Web Profile 的 `package.json` 中，将 `dsh-simple-ui` 加入 `dsh.profile.bundles`。
-3. 重启 DSH。
-4. 打开 **设置 → 外观皮肤**。
+- 不保存、不渲染 API Key。
+- 皮肤设置与背景图只存在本机浏览器的 `localStorage`，不发送给模型，也不写入会话。
+- 不序列化宿主内部对象。
 
-## 运行要求
+## 开发
 
-- 已安装 Web Profile 的 DeepSeek Harness。
-- DSH 客户端 Slot 系统可用。
-- 浏览器客户端连接提供标准 DSH API。
-- 模型选择使用：
-  - `llm.models`
-  - `sessions.models`
-  - `sessions.selectModel`
-- Base URL 探查使用：
-  - `llm.discoverModels`
-  - `openai-completions` 协议
+纯 JavaScript 双面插件（无构建步骤）：
 
-## 安全与隐私
+- `lib/index.js`：Host 半侧（仅声明，`apply` 为空）
+- `lib/client.js`：浏览器 Client 半侧，`window.__ModuleLoader__.load({ id: "dsh-simple-ui", factory })`
+- `cordis.patch.yml`：bundle patch，把插件行插进宿主组合
+- `locale/zh.json`、`locale/en.json`、`icon.svg`：插件列表里的展示名、描述与图标
 
-- 插件不会保存或渲染 API Key。
-- Base URL 探查是只读操作。
-- 插件不会序列化或暴露 Host 内部对象。
-- 用户上传的背景图片只用于客户端界面状态，不会发送给模型。
-
-## 开发结构
-
-本插件使用 DSH 双面插件格式，并且只使用原生 JavaScript：
-
-- `lib/index.js`：Host 半部
-- `lib/client.js`：浏览器 Client 半部
-- `cordis.patch.yml`：Web Profile bundle patch
-
-检查浏览器 bundle 语法：
+语法自查：
 
 ```powershell
 node --check lib/client.js
 ```
+
+行为回归（在 Node 沙箱里真实执行 `lib/client.js` 的工厂，注入假的 theme / slots / React / DOM）：
+
+```powershell
+node D:\A-AgentWorkspace\09\dsh-simple-ui-tests\client.test.mjs
+```
+
+该用例覆盖：工厂身份、设置分区注册、8 个预设逐个应用、颜色图层不泄漏、设置跨重载恢复、卸载清理、无网络字体引用、宿主选择器占位符可解析、CSS 结构合法。
+
+## 已知限制
+
+- 背景图受浏览器 `localStorage` 配额限制；压缩后仍存不下时只在本次会话生效，界面会给出提示。
+- 宿主大改版后，`aside` / `header` / `main` 这类语义兜底选择器范围比原哈希宽，可能出现轻微样式串扰；无兜底的卡片装饰则会直接降级为宿主默认样式。
 
 ## 许可证
 
