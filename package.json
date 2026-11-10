@@ -1,7 +1,7 @@
 {
   "name": "dsh-simple-ui",
-  "version": "1.10.1",
-  "description": "Appearance skins for DeepSeek Harness: 6 presets with light/dark palettes, 13 header styles, 17 composer styles, plus colour, font and background customization.",
+  "version": "1.11.0",
+  "description": "Appearance skins for DeepSeek Harness: 6 presets with light/dark palettes, 13 header styles, 17 composer styles, 7 built-in wallpapers, plus colour, font and background customization.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -26,6 +26,7 @@
   },
   "files": [
     "lib",
+    "assets",
     "locale/*.json",
     "icon.svg",
     "cordis.patch.yml",
@@ -38,7 +39,8 @@
     "deepseek-harness",
     "theme",
     "skin",
-    "appearance"
+    "appearance",
+    "wallpaper"
   ],
   "repository": {
     "type": "git",
