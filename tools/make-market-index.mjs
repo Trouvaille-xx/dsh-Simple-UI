@@ -29,8 +29,8 @@ const index = {
     zh: "Trouvaille 的 Simple UI",
   },
   description: {
-    en: "Appearance skins for the DeepSeek Harness web client: eight industrial-style presets plus colour, font, and background controls. Offline, persistent, and upgrade-safe.",
-    zh: "DeepSeek Harness Web 客户端外观皮肤：八套工业风预设，加上主色 / 字体 / 背景独立定制。离线可用、设置持久化、宿主升级不破版。",
+    en: "Appearance skins for the DeepSeek Harness web client: six presets with light and dark palettes, thirteen header styles, seventeen composer styles, plus colour, font and background controls. Offline, persistent, and upgrade-safe.",
+    zh: "DeepSeek Harness Web 客户端外观皮肤：六套预设（含深浅色）、十三种顶栏风格、十七种输入框风格，加上主色 / 字体 / 背景独立定制。离线可用、设置持久化、宿主升级不破版。",
   },
   metadata: {
     categories: {
@@ -43,8 +43,8 @@ const index = {
       name: pkg.name,
       title: { en: "Simple UI · Appearance", zh: "Simple UI · 外观皮肤" },
       description: {
-        en: "Eight industrial-style skins for the DSH web UI, with brand / accent / neutral / text colours, Chinese and English fonts, and a background image. Settings persist locally; no web fonts.",
-        zh: "给 DSH Web UI 的八套工业风皮肤，支持主色 / 辅助色 / 中性色 / 字体色、中英文字体、背景图。设置存在本地，刷新后仍在；不加载任何网络字体。",
+        en: "Six presets with light and dark palettes, thirteen header styles and seventeen composer styles for the DSH web UI, plus primary / neutral / text colours, Chinese and English fonts, and a background image. Settings persist locally; no web fonts.",
+        zh: "给 DSH Web UI 的六套预设（含深浅色）、十三种顶栏风格、十七种输入框风格，支持主色 / 中性色 / 字体色、中英文字体、背景图。设置存在本地，刷新后仍在；不加载任何网络字体。",
       },
       author: "Trouvaille-xx",
       repository: { url: repoUrl },

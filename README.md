@@ -1,23 +1,22 @@
 # DSH Simple UI
 
-An appearance plugin for the DeepSeek Harness (dsh) web client: eight industrial-style skin presets, corner-radius styles, background media (still images, animated images, video), and independent brand / accent / neutral / text colours plus Chinese and English fonts. Everything is stored in the browser, survives reload and restart, and loads no web fonts, so it works fully offline.
+An appearance plugin for the DeepSeek Harness (dsh) web client: six industrial-style skin presets, corner-radius styles, background media (still images, animated images, video), and independent brand / accent / neutral / text colours plus Chinese and English fonts. Everything is stored in the browser, survives reload and restart, and loads no web fonts, so it works fully offline.
 
 Repository: <https://github.com/Trouvaille-xx/dsh-Simple-UI>
 
 ## Features
 
-The settings page is split into four tabs: **Style / Background / Colors / Fonts**.
+The settings page has six tabs: **Style / Header / Composer / Background / Colour / Font**.
 
-- **Style**: eight presets (`[CC]`, Apple silver, deep-space terminal, neon purple, Night City 2077, red-and-white, newspaper, sketch) and a corner-radius control (sharp / small / standard / large / extra-large, plus a 0–240% slider; 100% is the host's native scale, applied proportionally across `--dsw-radius-*` and the window content radius).
-- **Background**: still images, animated images (GIF / APNG) and video (MP4 / WebM). Media is stored in IndexedDB, so it is not bound by the localStorage quota; there is a switch, a clear action and a restore-defaults action. Video is muted, looping and autoplaying by default and pauses when the tab is hidden.
-- **Folder slideshow**: pick a folder as the slideshow source. Images are ordered by file name (natural order: `1.jpg, 2.jpg, 10.jpg`), the interval is adjustable from 5 to 300 seconds, and previous/next buttons are available; videos in the folder are skipped. Up to 80 images and 200 MB total are kept, with a notice when the rest are dropped. The slideshow state, current slide and interval persist across reloads.
-- **Readability** (Background tab): a **scrim** slider (0–100%) controls the film laid over the picture, a **panel opacity** slider (0–100%) controls how much of the host surface colour covers the sidebar and conversation area (0% fully transparent, 100% hides the background), and **scrim tone** follows the theme or is forced light/dark. The veil is applied once per layout cell, so nesting cannot bury the image. Dialogs and the settings panel always stay fully opaque.
-- **Colors**: independent brand / accent / neutral / text-colour rows; the first cell of each row is a free colour picker, the rest are palette swatches.
-- **Fonts**: separate Chinese and English font controls. All stacks are local-first with same-style fallbacks, so Chinese text never falls back to tofu.
-- Settings persist in `localStorage` (key `dsh-simple-ui.preset.v1`, including the last tab) and background media in IndexedDB (database `dsh-simple-ui`), and are restored on the next load. Backgrounds saved by older versions in localStorage are migrated automatically.
-- No CDN or web-font requests: nothing blocks first paint, and the UI renders correctly offline.
-- **Survives host rebuilds**: no build hashes are hardcoded. Selectors match CSS Module local-name suffixes (`[class*="_centerCol"]`, `[class*="_sidebarCol"]`, `[class*="_frame"]` …) with container-scoped token overrides, so a DSH rebuild does not break the skin. If a background still does not show, the **Check** button in the Background tab reports how many host containers matched, the host surface colour, and whether the media layer and html background are ready.
-- Applies colours through the real DSH theme API (`theme.overrideTokens`); it does not rewrite host components or replace the conversation renderer.
+- **Style**: 6 presets (`[CC]`, Apple Silver, Night City 2077, Red & White, Newspaper, Sketch) plus corner radius (0–240% slider).
+- **Header**: 13 conversation-header styles in three groups — static (6): minimal, brand bar, dark bar, floating card, grid paper, left accent; dynamic (6): aurora, holographic, blueprint, neon cyber, liquid metal, starfield; custom (1): upload an image, cropped at 16:1 with an automatic scrim.
+- **Composer**: 17 input-box styles in three groups — static (7): flat, outline, float, inset, terminal, paper, glass; dynamic (9): flowing border, breathing glow, aurora gradient, neon scan, snow, peach petals, maple leaves, rain, caret pulse; custom (1): upload an image, cropped at 6:1 with an automatic scrim.
+- **Background**: static images, animated images (GIF / APNG) and video (MP4 / WebM), stored in IndexedDB.
+- **Colour**: primary, neutral and text colours, each with a free picker plus presets.
+- **Font**: separate Chinese and English font stacks, all local.
+- **Dark mode**: every preset and style ships light and dark values and follows the DSH theme automatically.
+- **Reduced motion**: all CSS animations sit inside `prefers-reduced-motion: no-preference`.
+- Host-upgrade safe: targets host-owned semantic attributes (`header[data-window-drag]`, `[data-conversation-tabs]`, `[data-composer-card]`, `[aria-selected]`) and CSS-module name suffixes instead of build hashes.
 
 ## Install
 

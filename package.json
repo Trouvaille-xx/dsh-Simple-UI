@@ -1,7 +1,7 @@
 {
   "name": "dsh-simple-ui",
-  "version": "1.4.1",
-  "description": "Industrial-style appearance skins plus colour, font and background customization for DeepSeek Harness.",
+  "version": "1.5.0",
+  "description": "Appearance skins for DeepSeek Harness: 6 presets with light/dark palettes, 13 header styles, 17 composer styles, plus colour, font and background customization.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
