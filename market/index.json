@@ -47,12 +47,12 @@
       },
       "versions": [
         {
-          "version": "1.16.4",
-          "publishTimestamp": 1794418479,
+          "version": "1.17.0",
+          "publishTimestamp": 1794418935,
           "source": {
             "type": "git",
             "url": "https://github.com/Trouvaille-xx/dsh-Simple-UI",
-            "commit": "f4303d4d067ecc897b62d43347dbaff00b7c2d3f"
+            "commit": "ab731e91d64a96ca61d154eced73810a11b6bd74"
           },
           "engines": {}
         }
