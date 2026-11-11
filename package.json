@@ -1,6 +1,6 @@
 {
   "name": "dsh-simple-ui",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "description": "Appearance skins for DeepSeek Harness: 6 presets with light/dark palettes, 13 header styles, 17 composer styles, 7 built-in wallpapers, plus colour, font and background customization.",
   "type": "module",
   "main": "lib/index.js",
